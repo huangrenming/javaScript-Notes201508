@@ -54,8 +54,8 @@ function animate(ele,/* attr,target */oTarget,duration,callback){
 	var counter=0;//只是一个标识，或叫一个记数器
 	var f=true;
 	for(var attr in oTarget){//把各维度的begin和change分解出来
-		var target=oTarget[attr];
-		begin=getCss(ele,attr);//应该有五个begin
+		var target=oTarget[attr],
+		begin=getCss(ele,attr),//应该有五个begin
 		change=target-begin;//应该有五个change
 		
 		//分别把每个属性（维度）上的值分别保存在各自对应的对象上
@@ -102,6 +102,11 @@ function animate(ele,/* attr,target */oTarget,duration,callback){
 div1.onclick=function(){
 	//animate(this,{left:400,top:333,width:200,height:290,opacity:0.1},1000);	
 	animate(this,{left:150},1000);
+}
+
+left.onclick=function(){
+	animate(this,{left:500,top:333,width:200,height:290,opacity:1},1000);	
+	// animate(this,{left:150},1000);
 }
 
 

@@ -68,7 +68,7 @@ setTimeout(function(){animate(inner,{top:0*-270},600);},40000);*/
 var step=0;
 function autoMove(){
 	step++;
-	if(step>=oLis.length)step=0;
+	if(step>=oLis.length) step=0;
 	animate(inner,{top:step*-270},600);
 	tips();
 	//window.setTimeout(autoMove,2000);

@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#outer{ width:500px; height:270px; margin:100px auto; overflow:hidden; position:relative;}
+#inner{ width:500px; height:1350px; position:absolute; top:-270px; left:0; color:#fff; font-size:72px; text-align:center; line-height:270px; }
+#inner div{ width:500px; height:270px; background:red; }
+#btn{ padding:0; margin:0; position:absolute; list-style:none; right:30px; top:30px; }
+#btn li{ width:30px; height:30px;  font-size:14px; font-weight:bold; border-radius:50%; cursor:pointer; background:orange; color:red; margin:10px; text-align:center; line-height:30px; }
+#btn li.promoted{ color:#fff; background:black;}
+</style>
+
+</head>
+
+<body>
+<div id="outer">
+	<div id="inner">
+    	<div >一</div><div style="background:black;">二</div><div style="background:green; " >三</div><div style="background:purple">四</div><div style="background:yellow;" >五</div>
+    </div>
+	<ul id="btn"><li id="pre" class="promoted">1</li><li>2</li><li>3</li><li>4</li><li id="next">5</li></ul>
+</div>
+</body>
+</html>
+<script src="tween.js"></script>
+<script>
+var innerDiv=document.getElementById("inner").getElementsByTagName("div");
+var firstDiv=innerDiv.item(0).cloneNode(true); 
+var lastDiv=innerDiv.item(innerDiv.length-1).cloneNode(true); 
+
+console.log(firstDiv, lastDiv);
+
+inner.appendChild(firstDiv);
+inner.insertBefore(lastDiv,innerDiv.item(0));
+
+var oLis=document.getElementById("btn").getElementsByTagName("li");
+var step=1;
+
+var dir = null;
+var h = -270;
+
+function autoUp(){
+
+	dir == 'down' ? step++ : step--;
+
+	
+	if(dir == 'down'){
+
+		if(step > innerDiv.length-1){//length是5，可以走到索引为5的第六张，如果超过这一张，则把inner的坐标切换到0。
+	
+			//alert(step);
+			inner.style.top= h+'px';//实现这个切换最多2毫秒，眼睛感受不到
+			//step=1
+			step=2;
+			//alert(step);
+		}
+	}
+
+	
+
+	if(dir == 'up'){
+
+		if(step < 0 ){//length是5，可以走到索引为5的第六张，如果超过这一张，则把inner的坐标切换到0。
+	
+			//alert(step);
+			inner.style.top= (innerDiv.length-2)*h+'px';//实现这个切换最多2毫秒，眼睛感受不到
+			//step=0
+			step = innerDiv.length-3;
+			//alert(step);
+		}
+	}
+	
+	animate(inner,{top:step*h},1600);
+
+	
+	tips(step);
+	
+}
+
+function tips(index){
+
+	// var tipsStep = null;
+
+	// tipsStep = dir == 'down' ? (step > oLis.length ?  0 : step-1) : (step < 1 ? oLis.length-1 : step-1);
+
+	// for(var i=0; i<oLis.length; i++){
+	// 	oLis[i].className = "";
+	// }
+
+	// oLis[tipsStep].className = 'promoted'
+
+	index = dir == 'down' ? (index > oLis.length ?  0 : index-1) : (index < 1 ? oLis.length-1 : index-1);
+	for(var i=0; i<oLis.length; i++){
+		oLis[i].className = i === index ? "promoted" : null;
+	}
+
+}
+
+
+next.onclick = function(){
+	dir = 'down'
+	autoUp();
+}
+pre.onclick = function(){
+	dir = 'up'
+	autoUp();
+}
+
+// window.setInterval(autoUp,3000);
+</script>
