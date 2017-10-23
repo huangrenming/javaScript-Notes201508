@@ -52,5 +52,60 @@ function up(e) {
     off(document, "mouseup", this.upFn);
 }
 
+// grag
+function drag(obj) {
+
+      obj.onmousedown = function(ev) {
+          var ev = ev || event;
+
+          console.log('offsetX', ev.offsetX)
+          console.log('offsetY', ev.offsetY)
+
+          console.log('offsetLeft ', this.offsetLeft)
+          console.log('offsetTop', this.offsetTop)
+
+          // var disX = ev.clientX - this.offsetLeft;
+          // var disY = ev.clientY - this.offsetTop;
+
+          var disX = ev.offsetX;
+          var disY = ev.offsetY;
+
+          var offsetWidth = this.offsetWidth
+
+          if ( obj.setCapture ) {
+              obj.setCapture();
+          }
+
+          document.onmousemove = function(ev) {
+              var ev = ev || event;
+
+              obj.style.left = ev.clientX - disX + 'px';
+              obj.style.top = ev.clientY - disY + 'px';
+
+              if (ev.clientX - disX < 0) {
+                obj.style.left = 0
+              }
+
+              if (ev.clientY - disY < 0) {
+                obj.style.top = 0
+              }
+
+              if (ev.clientX - disX + offsetWidth > window.innerWidth) {
+                obj.style.left = window.innerWidth - offsetWidth
+              }
+          }
+
+          document.onmouseup = function() {
+              document.onmousemove = document.onmouseup = null;
+              //释放全局捕获 releaseCapture();
+              if ( obj.releaseCapture ) {
+                  obj.releaseCapture();
+              }
+          }
+
+          return false;
+
+      }
+
 
 
